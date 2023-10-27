@@ -34,7 +34,7 @@ def main():
         # Calculate the position as percentages of the image size
         image_height, image_width, _ = img_rgb.shape
         x_position = int((x_center_position_percent / 100) * image_width - (text_size[0] // 2))
-        y_position = int((y_position_percent / 100) * image_height)
+        y_position = y_position_percent
 
         # Set the font color and thickness
         color = (text_color_r, text_color_g, text_color_b)
