@@ -16,7 +16,24 @@ def main():
     font_size = st.sidebar.slider("Font Size", min_value=10, max_value=100, value=36)
     thickness = st.sidebar.slider("Thickness", min_value=1, max_value=10, value=2)
     x_center_position_percent = st.sidebar.slider("X Center Position (%)", min_value=0, max_value=100, value=50)
-    y_position_percent = st.sidebar.slider("Y Position (%)", min_value=0, max_value=100, value=50)
+    y_position_percent = st.sidebar.number_input("Y Position (%)", min_value=0, max_value=10000, value=0)
+
+    # Add a dropdown menu for selecting the font
+    available_fonts = ["FONT_HERSHEY_SIMPLEX", "FONT_HERSHEY_PLAIN", "FONT_HERSHEY_DUPLEX", "FONT_HERSHEY_COMPLEX",
+                       "FONT_HERSHEY_TRIPLEX", "FONT_HERSHEY_COMPLEX_SMALL", "FONT_HERSHEY_SCRIPT_SIMPLEX"]
+    selected_font = st.sidebar.selectbox("Select Font", available_fonts)
+
+    # Map selected font to OpenCV constant
+    font_mapping = {
+        "FONT_HERSHEY_SIMPLEX": cv2.FONT_HERSHEY_SIMPLEX,
+        "FONT_HERSHEY_PLAIN": cv2.FONT_HERSHEY_PLAIN,
+        "FONT_HERSHEY_DUPLEX": cv2.FONT_HERSHEY_DUPLEX,
+        "FONT_HERSHEY_COMPLEX": cv2.FONT_HERSHEY_COMPLEX,
+        "FONT_HERSHEY_TRIPLEX": cv2.FONT_HERSHEY_TRIPLEX,
+        "FONT_HERSHEY_COMPLEX_SMALL": cv2.FONT_HERSHEY_COMPLEX_SMALL,
+        "FONT_HERSHEY_SCRIPT_SIMPLEX": cv2.FONT_HERSHEY_SCRIPT_SIMPLEX
+    }
+    selected_font_cv = font_mapping[selected_font]
 
     if uploaded_image:
         # Read the uploaded image using OpenCV
@@ -26,10 +43,10 @@ def main():
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         # Define the font
-        font = cv2.FONT_HERSHEY_PLAIN
+        # font = cv2.FONT_HERSHEY_PLAIN
 
         # Calculate the text size
-        text_size = cv2.getTextSize(text, font, font_size / 10, thickness)[0]
+        text_size = cv2.getTextSize(text, selected_font_cv, font_size / 10, thickness)[0]
 
         # Calculate the position as percentages of the image size
         image_height, image_width, _ = img_rgb.shape
@@ -43,7 +60,7 @@ def main():
         font_size = int(font_size)
 
         # Add the text to the image
-        cv2.putText(img_rgb, text, (x_position, y_position), font, font_size / 10, color, thickness)
+        cv2.putText(img_rgb, text, (x_position, y_position), selected_font_cv, font_size / 10, color, thickness)
 
         # Display the image with the added text
         st.image(img_rgb, channels="RGB", use_column_width=True, caption="Image with Text")
