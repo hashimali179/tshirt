@@ -23,7 +23,7 @@ def main():
 
 
         # Resize the foreground image based on slider values
-        resized_fg_image = cv2.resize(fg_image, (fg_width, fg_height))
+        resized_fg_image = cv2.resize(fg_image, (int(fg_width), int(fg_height)))
 
         # Calculate the position to place the resized foreground image based on slider values
         y_offset = y_fg_offset
