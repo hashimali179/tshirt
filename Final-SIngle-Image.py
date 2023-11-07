@@ -10,10 +10,10 @@ def main():
     foreground_image = st.file_uploader("Upload Foreground Image", type=["jpg", "png", "jpeg"])
 
     # Add sliders in the sidebar
-    fg_height = st.sidebar.slider("Foreground Height", min_value=10, max_value=1000, value=100)
-    fg_width = st.sidebar.slider("Foreground Width", min_value=10, max_value=1000, value=100)
-    x_fg_offset = st.sidebar.slider("X FG Offset", min_value=0, max_value=1000, value=0)
-    y_fg_offset = st.sidebar.slider("Y FG Offset", min_value=0, max_value=1000, value=0)
+    fg_height = st.sidebar.number_input("Foreground Height", min_value=0, max_value=10000, value=0)
+    fg_width = st.sidebar.number_input("Foreground Width", min_value=0, max_value=10000, value=0)
+    x_fg_offset = st.sidebar.number_input("X FG Offset", min_value=0, max_value=10000, value=0)
+    y_fg_offset = st.sidebar.number_input("Y FG Offset", min_value=0, max_value=10000, value=0)
 
     
     if background_image and foreground_image:
